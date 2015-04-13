@@ -1,7 +1,7 @@
 # Pool Simulator
 
 ## About
-This repository contains the source code for the simulator used in the 2015 Waterloo Engineering Competition (Software).
+This repository contains the source code for the simulator used in the 2015 Waterloo Engineering Competition (Programming).
 
 ## General Tasks
 1. Accept two text file
@@ -10,6 +10,9 @@ This repository contains the source code for the simulator used in the 2015 Wate
 2. Simulate Physics rules defined for competition
 3. Return the score Obtained
 4. Provide visual feedback via a GUI.
+
+## Ideas for further implementation
+* Discount value for score as each turn goes on
 
 ## Technology used
 * python (core)
