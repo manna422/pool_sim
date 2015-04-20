@@ -15,3 +15,13 @@ def check_collision_table(tbl, x_pos, y_pos):
 		return True
 	else:
 		return False
+
+def ball_collision(a, b):
+	# hard code mass as 1 for now
+	a_mass = 1
+	b_mass = 1
+
+	a.x_vel = (a.x_vel * (a_mass - b_mass) + (2 * b_mass * b.x_vel)) / (a_mass + b_mass);
+    a.y_vel = (a.y_vel * (a_mass - b_mass) + (2 * b_mass * b.y_vel)) / (a_mass + b_mass);
+	b.x_vel = (b.x_vel * (b_mass - a_mass) + (2 * a_mass * a.x_vel)) / (a_mass + b_mass);
+ 	b.y_vel = (b.y_vel * (b_mass - a_mass) + (2 * a_mass * a.y_vel)) / (a_mass + b_mass);

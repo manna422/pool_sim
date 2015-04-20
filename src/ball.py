@@ -59,7 +59,7 @@ class Ball(object):
         pocket_x = self.table.length // 2
         if (check_collision(self.x_pos, self.y_pos,
             self.table_b_radius, pocket_x, pocket_y,
-            pocket_rad):
+            pocket_rad)):
             self.table.remove_ball(self)
 
         # top left
@@ -68,5 +68,3 @@ class Ball(object):
             self.table_b_radius, pocket_x, pocket_y,
             pocket_rad)):
             self.table.remove_ball(self)
-
-
