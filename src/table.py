@@ -12,6 +12,8 @@ class Table(object):
         self.pocket_radius = pocket_radius
         self.pocket_offset = pocket_offset
 
+        self.total_score = 0
+
     def add_ball(self, x_pos, y_pos, score):
         # check if bal placed within table contrainsts
         if check_collision_table(self, x_pos, y_pos):
@@ -25,3 +27,7 @@ class Table(object):
 
         self.balls.append(newBall)
         return True
+
+    def remove_ball(self, ball):
+        self.total_score += ball.score
+        self.balls.remove(ball)
