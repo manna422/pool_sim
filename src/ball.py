@@ -1,4 +1,6 @@
-from math import sqrt, pow
+from math import sqrt, pow, sin, cos, pi
+
+from physics import *
 
 class Ball(object):
     def __init__(self, table, x_pos, y_pos, score):
@@ -11,14 +13,15 @@ class Ball(object):
         self.y_acc = 0
         self.score = score
 
-def check_collision(self, b_other):
-    if (sqrt(pow((self.x_pos - b_other.x_pos), 2)
-             + pow((self.y_pos - b_other.y_pos), 2)) <
-        (2 * self.table.b_radius)):
-        return True
-    else:
-        return False
+    def check_collision(self, b_other):
+        return check_collision(self.x_pos, self.y_pos, 
+            self.table.b_radius, b_other.x_pos, b_other.y_pos,
+            self.table.b_radius)
 
-def check_collision_table(self):
-    #TODO: write function
-    pass 
+    def check_collision_table(self):
+        return check_collision_table(self.table, self.x_pos,
+            self.y_pos)
+
+    def check_collision_pocket(self):
+        pass
+        

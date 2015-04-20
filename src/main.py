@@ -5,7 +5,7 @@ def main():
 
     # Test initial table
     # TODO: replace with values from input file scraper
-    tbl = Table(2700, (2700*2), 50)
+    tbl = Table(2700, (2700*2), 50, 50, 25)
     for i in range (0, 10000):
         tbl.add_ball(i, i, i)
     for t_ball in tbl.balls:

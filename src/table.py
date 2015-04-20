@@ -1,18 +1,20 @@
 from ball import Ball
+from physics import *
 
 class Table(object):
-    def __init__(self, width, length, b_radius):
+    def __init__(self, width, length, b_radius, 
+        pocket_radius, pocket_offset):
         self.width = width
         self.length = length
         self.b_radius = b_radius
         self.balls = []
 
+        self.pocket_radius = pocket_radius
+        self.pocket_offset = pocket_offset
+
     def add_ball(self, x_pos, y_pos, score):
         # check if bal placed within table contrainsts
-        if (((x_pos - self.b_radius) < 0)
-            or ((x_pos + self.b_radius) > self.width)
-            or ((y_pos - self.b_radius) < 0)
-            or ((y_pos + self.b_radius) > self.length)):
+        if check_collision_table(self, x_pos, y_pos):
             return False
 
         newBall = Ball(self, x_pos, y_pos, score)
