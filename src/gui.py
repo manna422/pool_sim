@@ -29,7 +29,7 @@ class Gui(object):
     def start(self):
         self.running = True
         self.draw_static()
-        joinall([spawn(self.update_table), spawn(self.gui_loop)])
+        joinall([spawn(self.gui_loop)])
 
     def gui_loop(self):
         while self.running:
@@ -39,7 +39,7 @@ class Gui(object):
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     self.running = False
             self.draw_static()
-            sleep(1/60)
+            sleep(1/120)
  
 
     def _draw_balls(self):

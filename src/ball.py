@@ -12,15 +12,18 @@ class Ball(object):
         self.x_acc = 0
         self.y_acc = 0
         self.score = score
+        self.active = True
 
     def check_collision(self, b_other):
-        return check_collision(self.x_pos, self.y_pos, 
+        if check_collision(self.x_pos, self.y_pos, 
             self.table.b_radius, b_other.x_pos, b_other.y_pos,
-            self.table.b_radius)
+            self.table.b_radius):
+            ball_collision(self, b_other)
 
     def check_collision_table(self):
-        return check_collision_table(self.table, self.x_pos,
-            self.y_pos)
+        if check_collision_table(self.table, self.x_pos,
+            self.y_pos):
+            table_collision(self.table, self)
 
     def check_collision_pocket(self):
         pocket_rad = self.table.pocket_radius
@@ -51,20 +54,20 @@ class Ball(object):
         # top right
         pocket_y = self.table.width - pocket_offset
         if (check_collision(self.x_pos, self.y_pos,
-            self.table_b_radius, pocket_x, pocket_y,
+            self.table.b_radius, pocket_x, pocket_y,
             pocket_rad)):
             self.table.remove_ball(self)
 
         # top center
         pocket_x = self.table.length // 2
         if (check_collision(self.x_pos, self.y_pos,
-            self.table_b_radius, pocket_x, pocket_y,
+            self.table.b_radius, pocket_x, pocket_y,
             pocket_rad)):
             self.table.remove_ball(self)
 
         # top left
         pocket_x = pocket_offset
         if (check_collision(self.x_pos, self.y_pos,
-            self.table_b_radius, pocket_x, pocket_y,
+            self.table.b_radius, pocket_x, pocket_y,
             pocket_rad)):
             self.table.remove_ball(self)
