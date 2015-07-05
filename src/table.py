@@ -1,5 +1,6 @@
 from ball import Ball
 from physics import *
+from math import copysign
 
 from gevent import sleep
 
@@ -40,8 +41,8 @@ class Table(object):
 
     def loop(self):
         #test
-        self.balls[0].x_vel = 100
-        self.balls[0].y_vel = 200
+        self.balls[0].x_vel = 0
+        self.balls[0].y_vel = -500
 
         while True:
             # update position, vel, accel
@@ -53,8 +54,11 @@ class Table(object):
                 ball.x_vel += ball.x_acc*self.dt
                 ball.y_vel += ball.y_acc*self.dt
 
-                ball.x_acc = (-1)*(ball.x_vel ** 2)*self.alpha
-                ball.y_acc = (-1)*(ball.y_vel ** 2)*self.alpha
+                ball.x_acc = (-1)*copysign(1,ball.x_vel)*(ball.x_vel ** 2)*self.alpha
+                ball.y_acc = (-1)*copysign(1,ball.y_vel)*(ball.y_vel ** 2)*self.alpha
+
+                ball.check_collision_table()
+                ball.check_collision_pocket()
 
             balls_to_check = self.balls[:]
 
@@ -64,13 +68,9 @@ class Table(object):
                 if not ball.active:
                     continue
 
-                ball.check_collision_table()
-                ball.check_collision_pocket()
-
                 for b_other in balls_to_check:
                     if not b_other.active:
                         continue
                     ball.check_collision(b_other)
 
-            print "x: %d y: %d" % (self.balls[0].x_pos, self.balls[0].y_pos)
             sleep(self.dt)
