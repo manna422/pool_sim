@@ -15,7 +15,7 @@ class Gui(object):
         self.width = width
         self.height = height
         self.screen = pygame.display.set_mode((self.width, self.height))
-        
+
         self.colors = {}
         self.colors['GREEN'] = (0, 255, 0)
         self.colors['RED'] = (255, 0, 0)
@@ -40,14 +40,15 @@ class Gui(object):
                     self.running = False
             self.draw_static()
             sleep(1/120)
- 
+
 
     def _draw_balls(self):
         for ball in self.tbl.balls:
-            pygame.draw.circle(self.screen, self.colors['RED'],
-                               (int(ball.x_pos * self.x_scale),
-                                int(ball.y_pos * self.y_scale)),
-                               int(self.b_radius))
+            if ball.active:
+                pygame.draw.circle(self.screen, self.colors['RED'],
+                                   (int(ball.x_pos * self.x_scale),
+                                    int(ball.y_pos * self.y_scale)),
+                                   int(self.b_radius))
 
 
     def _draw_pockets(self):
