@@ -17,9 +17,25 @@ class Gui(object):
         self.screen = pygame.display.set_mode((self.width, self.height))
 
         self.colors = {}
-        self.colors['GREEN'] = (0, 255, 0)
-        self.colors['RED'] = (255, 0, 0)
-        self.colors['GREY'] = (127, 127, 127)
+        self.colors['TABLE'] = (34,139,34)
+        self.colors['POCKET'] = (127, 127, 127)
+        self.colors['BALLS'] = []
+        self.colors['BALLS'].append((255, 255, 255))
+        self.colors['BALLS'].append((0,0,0))
+        self.colors['BALLS'].append((255,0,0))
+        self.colors['BALLS'].append((0,255,0))
+        self.colors['BALLS'].append((0,0,255))
+        self.colors['BALLS'].append((255,255,0))
+        self.colors['BALLS'].append((0,255,255))
+        self.colors['BALLS'].append((255,0,255))
+        self.colors['BALLS'].append((128,0,0))
+        self.colors['BALLS'].append((128,128,0))
+        self.colors['BALLS'].append((0,128,0))
+        self.colors['BALLS'].append((128,0,128))
+        self.colors['BALLS'].append((0,128,128))
+        self.colors['BALLS'].append((0,0,128))
+        self.colors['BALLS'].append((70,130,180))
+        self.colors['BALLS'].append((188,143,143))
 
         self.x_scale = self.width / self.tbl.width
         self.y_scale = self.height / self.tbl.length
@@ -45,7 +61,7 @@ class Gui(object):
     def _draw_balls(self):
         for ball in self.tbl.balls:
             if ball.active:
-                pygame.draw.circle(self.screen, self.colors['RED'],
+                pygame.draw.circle(self.screen, self.colors['BALLS'][ball.score],
                                    (int(ball.x_pos * self.x_scale),
                                     int(ball.y_pos * self.y_scale)),
                                    int(self.b_radius))
@@ -59,14 +75,14 @@ class Gui(object):
                        (self.tbl.length - self.tbl.pocket_offset)]
         for x_pos in x_positions:
             for y_pos in y_positions:
-                pygame.draw.circle(self.screen, self.colors['GREY'],
+                pygame.draw.circle(self.screen, self.colors['POCKET'],
                                    (int(x_pos * self.x_scale),
                                     int(y_pos * self.y_scale)),
                                    int(self.tbl.pocket_radius * self.b_scale))
 
 
     def draw_static(self):
-        self.screen.fill(self.colors['GREEN'])
+        self.screen.fill(self.colors['TABLE'])
         self._draw_pockets()
         self._draw_balls()
 

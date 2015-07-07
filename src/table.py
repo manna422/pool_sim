@@ -20,6 +20,9 @@ class Table(object):
         self.balls = []
         self.total_score = 0
 
+        self.add_ball(self.width/2, self.length/2, 0)
+        self.balls[0].active = False
+
         for ball in table_data['balls']:
             self.add_ball(*ball)
 
