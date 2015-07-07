@@ -31,7 +31,7 @@ def ball_collision(a, b):
 def table_collision(tbl, ball):
 	if ((ball.x_pos - tbl.b_radius) < 0) or ((ball.x_pos + tbl.b_radius) > tbl.width):
 		ball.x_vel *= -1
-		ball.x_pos += ball.x_pos*tbl.dt
+		ball.x_pos += ball.x_vel*tbl.dt
 	if ((ball.y_pos - tbl.b_radius) < 0) or ((ball.y_pos + tbl.b_radius) > tbl.length):
 		ball.y_vel *= -1
-		ball.y_pos += ball.y_pos*tbl.dt
+		ball.y_pos += ball.y_vel*tbl.dt
