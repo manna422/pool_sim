@@ -26,7 +26,7 @@ def read_datasheet(filename):
 
 def read_player_data(filename):
     # TODO: validation checking
-    return [(25, 25, 1000, 100 ), (0, -2500, 1000, 250)]
+    return [ (0, -20000, 1200, 5000)]
 
 def main():
     print 'Simulation started.'
