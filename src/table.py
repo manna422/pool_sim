@@ -42,6 +42,7 @@ class Table(object):
     def remove_ball(self, ball):
         self.total_score += ball.score
         ball.active = False
+        print "Ball sunk! score => %d" % self.total_score
 
     def loop(self):
         for shot in self.shots_sequence:
