@@ -17,12 +17,12 @@ def read_datasheet(filename):
                                       int(ball_pos[2])))
             elif '=' in line:
                 entry = line.split('=')
-                try:            
+                try:
                     data[entry[0]] = float(entry[1])
                 except Exception, e:
                     print 'invalid datasheet: %s' % e
     return data
-        
+
 
 def read_player_data(filename):
     # TODO: validation checking
@@ -38,7 +38,7 @@ def main():
 
     spawn(tbl.loop)
 
-    gui = Gui(tbl, 400, 800)
+    gui = Gui(tbl, 350, 700)
     gui.start()
 
 if __name__ == '__main__':

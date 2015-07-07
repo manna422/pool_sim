@@ -1,6 +1,6 @@
 from ball import Ball
 from physics import *
-from math import copysign
+from math import copysign, sqrt, atan, sin, cos
 
 from gevent import sleep
 
@@ -57,11 +57,23 @@ class Table(object):
                 self.balls[0].y_pos = shot[3]
                 valid_reset = False
                 while valid_reset == False:
+                    valid_reset = True
                     for ball in self.balls[1:]:
-                       if self.balls[0].check_collision(ball):
-                           nx = self.balls[0].x_pos - ball.x_pos
-                           ny = self.balls[0].y_pos - ball.y_pos
-                           self.balls[0].x_pos = self.balls[0].x_pos
+                        if self.balls[0].check_collision(ball):
+                            valid_reset = False
+                            # edge case if the ball is RIGHT on top
+                            if (ball.x_pos == self.ball[0].x_pos and
+                                ball.y_pos == self.ball[0].y_pos):
+                                #very stupid solution
+                                ball.y_pos -= 1
+                            else:
+                                nx = ball.x_pos - self.balls[0].x_pos
+                                ny = ball.y_pos - self.balls[0].y_pos
+                                pheta = atan(ny/nx)
+                                dist = sqrt(nx ** 2 + ny ** 2)
+                                d = 2*self.b_radius - dist
+                                ball.x_pos -= d*cos(pheta)
+                                ball.y_pos -= d*sin(pheta)
 
             shot_running = True
             while shot_running:
