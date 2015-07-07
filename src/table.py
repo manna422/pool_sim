@@ -5,12 +5,14 @@ from math import copysign
 from gevent import sleep
 
 class Table(object):
-    def __init__(self, table_data):
+    def __init__(self, table_data, shots_sequence):
         self.width = table_data['width']
         self.length = table_data['length']
         self.b_radius = table_data['b_radius']
         self.alpha = table_data['alpha']
         self.dt = table_data['dt']
+        self.vel_thres = table_data['vel_threshold']
+        self.num_shots = int(table_data['num_shots'])
 
         self.pocket_radius = table_data['pocket_radius']
         self.pocket_offset = table_data['pocket_offset']
@@ -20,6 +22,8 @@ class Table(object):
 
         for ball in table_data['balls']:
             self.add_ball(*ball)
+
+        self.shots_sequence = shots_sequence
 
     def add_ball(self, x_pos, y_pos, score):
         # check if bal placed within table contrainsts
@@ -40,37 +44,56 @@ class Table(object):
         ball.active = False
 
     def loop(self):
-        #test
-        self.balls[0].x_vel = 0
-        self.balls[0].y_vel = -500
+        for shot in self.shots_sequence:
+            self.balls[0].x_vel = 0
+            self.balls[0].y_vel = -2500
+            shot_running = True
+            while shot_running:
+                shot_running = False
 
-        while True:
-            # update position, vel, accel
-            for ball in self.balls:
-                if not ball.active: continue
-                ball.x_pos += ball.x_vel*self.dt
-                ball.y_pos += ball.y_vel*self.dt
+                # update position, vel, accel
+                for ball in self.balls:
+                    if not ball.active: continue
+                    ball.x_pos += ball.x_vel*self.dt
+                    ball.y_pos += ball.y_vel*self.dt
 
-                ball.x_vel += ball.x_acc*self.dt
-                ball.y_vel += ball.y_acc*self.dt
+                    ball.x_acc = (-1)*copysign(1,ball.x_vel)*(ball.x_vel ** 2)*self.alpha
+                    ball.y_acc = (-1)*copysign(1,ball.y_vel)*(ball.y_vel ** 2)*self.alpha
 
-                ball.x_acc = (-1)*copysign(1,ball.x_vel)*(ball.x_vel ** 2)*self.alpha
-                ball.y_acc = (-1)*copysign(1,ball.y_vel)*(ball.y_vel ** 2)*self.alpha
+                    if abs(ball.x_acc*self.dt) <= abs(ball.x_vel):
+                        ball.x_vel += ball.x_acc*self.dt
+                    else:
+                        ball.x_vel = 0
+                        ball.x_acc = 0
 
-                ball.check_collision_table()
-                ball.check_collision_pocket()
+                    if abs(ball.y_acc*self.dt) <= abs(ball.y_vel):
+                        ball.y_vel += ball.y_acc*self.dt
+                    else:
+                        ball.y_vel = 0
+                        ball.y_acc = 0
 
-            balls_to_check = self.balls[:]
+                    if shot_running == False:
+                        if abs(ball.x_vel) > self.vel_thres or abs(ball.y_vel) > self.vel_thres:
+                            shot_running = True
 
-            #check collision
-            for ball in balls_to_check:
-                balls_to_check.remove(ball)
-                if not ball.active:
-                    continue
+                    ball.check_collision_table()
+                    ball.check_collision_pocket()
 
-                for b_other in balls_to_check:
-                    if not b_other.active:
+                balls_to_check = self.balls[:]
+
+                #check collision
+                for ball in balls_to_check:
+                    balls_to_check.remove(ball)
+                    if not ball.active:
                         continue
-                    ball.check_collision(b_other)
 
-            sleep(self.dt)
+                    for b_other in balls_to_check:
+                        if not b_other.active:
+                            continue
+                        ball.check_collision(b_other)
+
+                sleep(self.dt/10)
+            print "stopping"
+            for ball in self.balls:
+                ball.x_vel = 0
+                ball.y_vel = 0

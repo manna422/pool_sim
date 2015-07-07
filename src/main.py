@@ -24,15 +24,17 @@ def read_datasheet(filename):
     return data
         
 
-def read_player_data():
-    pass
+def read_player_data(filename):
+    # TODO: validation checking
+    return [(0, -2500, 1000, 250)]
 
 def main():
     print 'Simulation started.'
 
     # Test initial table
     table_data = read_datasheet('../mdata/sample_table.data')
-    tbl = Table(table_data)
+    shot_sequence = read_player_data('../mdata/shots.data')
+    tbl = Table(table_data, shot_sequence)
 
     spawn(tbl.loop)
 
