@@ -46,8 +46,23 @@ class Table(object):
 
     def loop(self):
         for shot in self.shots_sequence:
-            self.balls[0].x_vel = 0
-            self.balls[0].y_vel = -2500
+            # set shot velocities
+            self.balls[0].x_vel = shot[0]
+            self.balls[0].y_vel = shot[1]
+
+            # if previous shot => scratch, find valid whiteball position
+            if self.balls[0].active == False:
+                self.balls[0].active = True
+                self.balls[0].x_pos = shot[2]
+                self.balls[0].y_pos = shot[3]
+                valid_reset = False
+                while valid_reset == False:
+                    for ball in self.balls[1:]:
+                       if self.balls[0].check_collision(ball):
+                           nx = self.balls[0].x_pos - ball.x_pos
+                           ny = self.balls[0].y_pos - ball.y_pos
+                           self.balls[0].x_pos = self.balls[0].x_pos
+
             shot_running = True
             while shot_running:
                 shot_running = False
