@@ -85,6 +85,7 @@ class Table(object):
                 # update position, vel, accel
                 for ball in self.balls:
                     if not ball.active: continue
+
                     ball.x_pos += ball.x_vel*self.dt
                     ball.y_pos += ball.y_vel*self.dt
 
@@ -110,21 +111,28 @@ class Table(object):
                     ball.check_collision_table()
                     ball.check_collision_pocket()
 
-                balls_to_check = self.balls[:]
+                # balls_to_check = self.balls[:]
 
-                #check collision
-                for ball in balls_to_check:
-                    balls_to_check.remove(ball)
-                    if not ball.active:
-                        continue
+                # #check collision
+                # for ball in balls_to_check:
+                #     balls_to_check.remove(ball)
+                #     if not ball.active:
+                #         continue
 
-                    for b_other in balls_to_check:
-                        if not b_other.active:
-                            continue
-                        ball.check_collision(b_other)
+                #     for b_other in balls_to_check:
+                #         if not b_other.active:
+                #             continue
+                #         ball.check_collision(b_other)
+                for ball in self.balls:
+                    if ball.active == False: continue
+                    for ball2 in self.balls:
+                        if ball2.active == False: continue
+                        if ball != ball2:
+                            ball.check_collision(ball2)
 
-                sleep(self.dt/10)
+                sleep(self.dt*0.0001)
             print "stopping"
             for ball in self.balls:
                 ball.x_vel = 0
                 ball.y_vel = 0
+
