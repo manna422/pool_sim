@@ -33,36 +33,36 @@ class Ball(object):
         # top left
         pocket_x = pocket_offset
         pocket_y = pocket_offset
-        if (check_pocket_sunk(self.x_pos, self.y_pos,
-            pocket_x, pocket_y, pocket_rad)):
+        if (check_collision(self.x_pos, self.y_pos,
+            0, pocket_x, pocket_y, pocket_rad)):
             self.table.remove_ball(self)
 
         # center left
         pocket_y = self.table.length // 2
-        if (check_pocket_sunk(self.x_pos, self.y_pos,
-            pocket_x, pocket_y, pocket_rad)):
+        if (check_collision(self.x_pos, self.y_pos,
+            0, pocket_x, pocket_y, pocket_rad)):
             self.table.remove_ball(self)
 
         # bottom left
         pocket_y = self.table.length - pocket_offset
-        if (check_pocket_sunk(self.x_pos, self.y_pos,
-            pocket_x, pocket_y, pocket_rad)):
+        if (check_collision(self.x_pos, self.y_pos,
+            0, pocket_x, pocket_y, pocket_rad)):
             self.table.remove_ball(self)
 
         # bottom right
         pocket_x = self.table.width - pocket_offset
-        if (check_pocket_sunk(self.x_pos, self.y_pos,
-            pocket_x, pocket_y, pocket_rad)):
+        if (check_collision(self.x_pos, self.y_pos,
+            0, pocket_x, pocket_y, pocket_rad)):
             self.table.remove_ball(self)
 
         # center right
         pocket_y = self.table.length // 2
-        if (check_pocket_sunk(self.x_pos, self.y_pos,
-            pocket_x, pocket_y, pocket_rad)):
+        if (check_collision(self.x_pos, self.y_pos,
+            0, pocket_x, pocket_y, pocket_rad)):
             self.table.remove_ball(self)
 
         # top right
         pocket_y = pocket_offset
-        if (check_pocket_sunk(self.x_pos, self.y_pos,
-            pocket_x, pocket_y, pocket_rad)):
+        if (check_collision(self.x_pos, self.y_pos,
+            0, pocket_x, pocket_y, pocket_rad)):
             self.table.remove_ball(self)

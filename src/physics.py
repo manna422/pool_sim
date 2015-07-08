@@ -7,13 +7,6 @@ def check_collision(ax, ay, a_radius, bx, by, b_radius):
 	else:
 		return False
 
-def check_pocket_sunk(ax, ay, bx, by, pocket_radius):
-	if (sqrt(pow((ax - bx), 2) + pow((ay - by), 2)) <
-		pocket_radius):
-		return True
-	else:
-		return False
-
 def check_collision_table(tbl, x_pos, y_pos):
 	if (((x_pos - tbl.b_radius) < 0)
         or ((x_pos + tbl.b_radius) > tbl.width)
